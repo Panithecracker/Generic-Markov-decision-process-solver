@@ -1,2 +1,2 @@
-# Modelling-with-MDP-s-an-intelligent-thermostat.-
-This repo contains the source code for developing a solution based on Markov Decision Processes in order to design a smart thermostat, capable of maintaing the temperature of a room desired by the user. 
+# Markov Decision Process solver .-
+The user defines inside a file a set of states, actions, transitions and immediate costs and the program will compute the optimal policy through the solution of the Bellman Equations, iteratively.
