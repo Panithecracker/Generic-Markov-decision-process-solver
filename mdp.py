@@ -109,6 +109,11 @@ class MDP:
 
     def OptimalPolicy(self):
         V = self.ValueIteration()
+        ######################################
+        # def OptimalPolicy(self, V = None): #
+        #   if V == None:                    #
+        #       V = self.ValueIteration()    #
+        ######################################
         OP = {s: None for s in self.States}
         for s in self.States:
             if not s.goal: #for all those states that are not goal states...
