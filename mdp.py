@@ -125,6 +125,9 @@ class MDP:
                             c += self.Transitions[t] * V[s_prime]
                     if c < min:
                         opt_action = a # update the optimal action found for the state s
+                        min = c #update current minimum found
                 OP[s] = opt_action
         return OP  # in the end, the dictionary OP contains the optimal actions for all the sates in the MDP object
+
+
 
