@@ -1,6 +1,7 @@
 from mdp import State, Action, Transition
 import re
 
+
 def parse_file(file):
     # Initialize the list of transitions
     states = set()
@@ -13,46 +14,45 @@ def parse_file(file):
         for line in f:
             # Match the line that starts with "states:"
             if line.startswith('states:'):
-               # print()
+                # print()
                 # Use regular expressions to find all states in the line
-                goal = float(re.search(r'(\d+(?:\.\d+)?)\*', line).group(1))
-                matches = re.findall(r'(\d+\*?)', line)
+                matches = re.findall(r'(\d+(?:\.\d+)?\*?)', line)
                 for match in matches:
                     # Create a State object for each state found
-                    val = int(match.rstrip('*'))
+                    val = float(match.rstrip('*'))
                     g = 1 if match.endswith('*') else 0
                     state = State(val, g)
-                    #print(state)
+                    # print(state)
                     states.add(state)
-                #print("S = " + str(states))
+                # print("S = " + str(states))
             # Match the line that starts with "actions:"
             elif line.startswith('actions:'):
-                #print()
+                # print()
                 # Extract the list of actions
                 action_names = re.findall(r'\b\w+\b', line)[1:]
                 for name in action_names:
                     action = Action(name)
-                    #print(action)
+                    # print(action)
                     actions.add(action)
-               # print("A = " + str(actions))
+                # print("A = " + str(actions))
             # Match the line that starts with "costs:"
             elif line.startswith('costs:'):
-               # print()
+                # print()
                 # Extract the costs
                 costs = re.findall(r'c\((\w+)\) = (\d+(?:\.\d+)?)', line)
                 # Convert the costs to a dictionary
                 costs = {Action(action): float(cost) for action, cost in costs}
-                #print("IC = " + str(costs))
+                # print("IC = " + str(costs))
             # Match the lines that start with "transitions:"
             elif line.startswith('transitions:'):
-               # print()
-                matches = re.findall(r'T\((\d+\*?),(\d+\*?),(\w)\) = (\d\.\d)', line)
+                # print()
+                matches = re.findall(r'T\((\d+(?:\.\d+)?\*?),(\d+(?:\.\d+)?\*?),(\w+)\) = (\d+(?:\.\d+)?)', line)
                 for match in matches:
-                    p_val = int(match[0].rstrip('*'))
+                    p_val = float(match[0].rstrip('*'))
                     p_goal = 1 if match[0].endswith('*') else 0
                     p = State(p_val, p_goal)
 
-                    q_val = int(match[1].rstrip('*'))
+                    q_val = float(match[1].rstrip('*'))
                     q_goal = 1 if match[1].endswith('*') else 0
                     q = State(q_val, q_goal)
 
@@ -61,10 +61,12 @@ def parse_file(file):
 
                     prob = float(match[3])
                     transition = Transition(p, q, a)
-                  #  print(transition)
+                    # print(transition)
+
                     transitions[transition] = prob
-                #print("T = " + str(transitions))
+                # print("T = " + str(transitions))
 
     return states, actions, costs, transitions
 
-
+# Un-comment the line below and run this file if you want to check what the parser is doing
+# states, actions, costs, transitions = parse_file('file')
