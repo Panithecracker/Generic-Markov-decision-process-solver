@@ -86,8 +86,7 @@ class MDP:
     def ValueIteration(self):
         # solves the Bellman's Equations iteratively through the common fixed point method
         done = False
-        iters = 0
-        V = {key: 0 for key in self.States} # dictionary initialization where keys are states and values 0
+        V = {key: 0.0 for key in self.States} # dictionary initialization where keys are states and values 0
         while not done:  # (later we will determine a stopping criteria)
             OldV = V.copy()
             for s in V:
@@ -98,7 +97,9 @@ class MDP:
                         v = self.ImmediateCosts[a]
                         for s_prime in self.States:
                             t = Transition(s, s_prime, a)
-                            v += self.Transitions[t] * OldV[s_prime]
+                            #check if this transition has nonzero probability of ocurring (otherwise, the addition is useless)
+                            if t in self.Transitions:
+                                v += self.Transitions[t] * OldV[s_prime]
                         if v < min:
                             min = v  # new minimum found
                     # now, update the value of current state s on V dictionary...
@@ -109,11 +110,6 @@ class MDP:
 
     def OptimalPolicy(self):
         V = self.ValueIteration()
-        ######################################
-        # def OptimalPolicy(self, V = None): #
-        #   if V == None:                    #
-        #       V = self.ValueIteration()    #
-        ######################################
         OP = {s: None for s in self.States}
         for s in self.States:
             if not s.goal: #for all those states that are not goal states...
@@ -124,7 +120,9 @@ class MDP:
                     for s_prime in self.States:
                         # for each state in the set of states, loop through all actions and compute weighted sum of values
                         t = Transition(s, s_prime, a)
-                        c += self.Transitions[t] * V[s_prime]
+                        # check if this transition has nonzero probability of ocurring (otherwise, the addition is useless)
+                        if t in self.Transitions:
+                            c += self.Transitions[t] * V[s_prime]
                     if c < min:
                         opt_action = a # update the optimal action found for the state s
                 OP[s] = opt_action
