@@ -9,7 +9,7 @@ policy = basic_mdp.OptimalPolicy()
 
 print("OPTIMAL POLICY :")
 for state in policy:
-    print(f"State: {state}, Action: {policy[state]}")
+   print(f"{state} -> Optimal: {policy[state]}")
 
 print('Contents have been successfully written in a file called "OptimalPolicy.txt" ')
 basic_mdp.WriteOptimalPolicy(policy)
