@@ -129,5 +129,10 @@ class MDP:
                 OP[s] = opt_action
         return OP  # in the end, the dictionary OP contains the optimal actions for all the sates in the MDP object
 
+    def WriteOptimalPolicy(self, policy):
+        # writes the optimal policy of the mdp inside a text file named "OptimalPolicy.txt" in the current user directory
+        with open("OptimalPolicy.txt", "w") as f:
+            for state, action in policy.items():
+                f.write(f"{state} = {action}\n")
 
 
