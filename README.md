@@ -1,2 +1,1 @@
-# Markov Decision Process solver .-
-The user defines inside a file a set of states, actions, transitions and immediate costs and the program will compute the optimal policy through the solution of the Bellman Equations, iteratively.
+Creation of a generic program capable of computing the optimal policy for an arbitrary Markov Decision Process defined by the user via text file. specifying its states, actions, costs and transition probabilities. It corresponds to a project for my AI course.
